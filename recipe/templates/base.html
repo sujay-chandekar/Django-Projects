@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #343a40;
+            padding: 10px 20px;
+        }
+        .navbar .container-fluid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar .d-flex a {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .navbar .d-flex a:hover {
+            background-color: #218838;
+        }
+        .navbar .d-flex {
+            display: flex;
+            align-items: center;
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+        .content button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .content button a {
+            color: white;
+            text-decoration: none;
+        }
+        .content button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <form class="d-flex" role="search">
+                {% if request.user.is_authenticated %}
+                <a href="/logout/" class="btn-success" type="submit">Logout</a>
+                {% endif %}
+            </form>
+        </div>
+    </nav>
+    <div class="content">
+        {% block start %}
+        <a href="about.html"></a>
+        <button><a href="contact.html">CONTACT</a></button>
+        <button><a href="base.html">BASE</a></button>
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% block start %}
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  form {
+    margin-top: 20px;
+  }
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+  }
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+    font-family: inherit;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  input[type="text"]:focus,
+  textarea:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  }
+  input[type="file"] {
+    margin-top: 5px;
+    padding: 10px;
+  }
+  button[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  .mt-5 {
+    margin-top: 50px;
+  }
+  .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .col-6 {
+    width: 50%;
+  }
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  table caption {
+    caption-side: top;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+  }
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  th, td {
+    padding: 12px;
+    text-align: center;
+  }
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #333;
+  }
+  td img {
+    height: 100px;
+    width: auto;
+    border-radius: 5px;
+  }
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  .btn-danger:hover {
+    background-color: #c82333;
+  }
+  .btn-danger a {
+    color: white;
+    text-decoration: none;
+  }
+  .btn-danger a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<form action="#" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% if messages %}
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+  </div>
+  {% endif %}
+  <div class="container">
+    {% csrf_token %}
+    <h1>Add New Recipe</h1>
+    <form action="#" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="recipeName">Recipe Name:</label>
+      <input type="text" id="recipeName" name="recipeName" required>
+      
+      <label for="recipeDescription">Recipe Description:</label>
+      <textarea id="recipeDescription" name="recipeDescription" rows="5" required></textarea>
+      
+      <label for="photo">Photo:</label>
+      <input type="file" id="photo" name="photo" accept="image/*" required>
+      
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <hr>
+  <div class="mt-5">
+    <div class="mx-auto col-6">
+      <form>
+        <label for="recipeName"><h3>Search Food</h3></label>
+        <input name="search" type="text" class="form-control">
+        <button type="submit" class="btn-primary">Search</button>
+      </form>
+    </div>
+  </div>
+  <table>
+    <caption>RECIPE</caption>
+    <thead>
+      <tr>
+        <th>Sr.No</th>
+        <th>Recipe Name</th>
+        <th>Recipe Description</th>
+        <th>Recipe Image</th>
+        <th>Delete Recipe</th>
+        <th>Update Recipe</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for recipe in recipes %}
+        <tr>
+          <td>{{ recipe.id }}</td>
+          <td>{{ recipe.recipe_name }}</td>
+          <td>{{ recipe.recipe_description }}</td>
+          <td><img src="/media/{{ recipe.recipe_image }}" alt="{{ recipe.recipe_name }}"></td>
+          <td><button class="btn-danger"><a href="/delete_recipes/{{ recipe.id }}/">Delete</a></button></td>
+          <td><button class="btn-danger"><a href="/update_recipe/{{ recipe.id }}/">Update</a></button></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
